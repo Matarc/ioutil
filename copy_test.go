@@ -264,3 +264,28 @@ func TestCopyDirectoryToExistingDirectory(t *testing.T) {
 		return nil
 	})
 }
+func TestIsFileEmptyWithEmptyFile(t *testing.T) {
+	file, err := ioutil.TempFile(os.TempDir(), "TestIsFileEmptyWithEmptyFile")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.Remove(file.Name())
+	defer file.Close()
+	if !IsFileEmpty(file.Name()) {
+		t.Fatalf("`%s` should be an empty file", file.Name())
+	}
+}
+
+func TestIsFileEmptyWithNonEmptyFile(t *testing.T) {
+	file, err := ioutil.TempFile(os.TempDir(), "TestIsFileEmptyWithNonEmptyFile")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.Remove(file.Name())
+	file.Write([]byte("Hello World!"))
+	file.Sync()
+	file.Close()
+	if IsFileEmpty(file.Name()) {
+		t.Fatalf("`%s` should not be an empty file", file.Name())
+	}
+}

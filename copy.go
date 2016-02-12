@@ -103,3 +103,11 @@ func CompareFile(file1, file2 string) (int, error) {
 	}
 	return bytes.Compare(buf1, buf2), nil
 }
+
+func IsFileEmpty(filepath string) bool {
+	fileinfo, err := os.Stat(filepath)
+	if err != nil {
+		return false
+	}
+	return fileinfo.Size() == 0
+}
