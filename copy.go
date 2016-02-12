@@ -69,7 +69,7 @@ func Copy(source, destination string) (err error) {
 	})
 }
 
-func copyFile(source, destination string) error {
+func copyFile(source, destination string) (err error) {
 	in, err := os.Open(source)
 	if err != nil {
 		return err
@@ -80,7 +80,7 @@ func copyFile(source, destination string) error {
 		return err
 	}
 	defer func() {
-		cerr := in.Close()
+		cerr := out.Close()
 		if err == nil {
 			err = cerr
 		}
