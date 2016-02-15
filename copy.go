@@ -8,9 +8,12 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 )
 
 func Copy(source, destination string) (err error) {
+	source = trimTrailingSlash(source)
+	destination = trimTrailingSlash(destination)
 	srcInfo, srcErr := os.Stat(source)
 	if srcErr != nil {
 		return srcErr
@@ -70,6 +73,8 @@ func Copy(source, destination string) (err error) {
 }
 
 func ShadowCopy(source, destination string) (err error) {
+	source = trimTrailingSlash(source)
+	destination = trimTrailingSlash(destination)
 	srcInfo, srcErr := os.Stat(source)
 	if srcErr != nil {
 		return srcErr
@@ -188,4 +193,12 @@ func IsFileEmpty(filepath string) bool {
 		return false
 	}
 	return fileinfo.Size() == 0
+}
+
+func trimTrailingSlash(path string) string {
+	i := strings.LastIndex(path, "/")
+	if i == len(path)-1 {
+		return path[:i]
+	}
+	return path
 }

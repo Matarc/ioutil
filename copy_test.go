@@ -385,7 +385,7 @@ func TestShadowCopyDirectoryToExistingDirectory(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(maindir)
+	//defer os.RemoveAll(maindir)
 	dir, err := ioutil.TempDir(maindir, "dir")
 	if err != nil {
 		t.Fatal(err)
@@ -412,7 +412,7 @@ func TestShadowCopyDirectoryToExistingDirectory(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(cpyDir)
+	//defer os.RemoveAll(cpyDir)
 	err = ShadowCopy(maindir, cpyDir)
 	if err != nil {
 		t.Fatal(err)
